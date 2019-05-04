@@ -9,13 +9,9 @@
 import Foundation
 
 struct Attendee {
-    var name: Name
+    var firstname: String
+    var lastname: String
     var email: String
     var phoneNumber: String
-}
-
-struct Name {
-    var firstName: String
-    var lastName: String
 }
 

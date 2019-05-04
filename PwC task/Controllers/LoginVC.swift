@@ -22,6 +22,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var loginView: UIView!
     private var signUpPressedFirstTime = false
+    private var api = PwCEventAPI()
     private var signUpButtonOriginalConstraint:CGFloat = 0
     @IBOutlet weak var firstNameTextField: UITextField!{
         didSet {
@@ -53,7 +54,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
             emailTextField.setIcon(#imageLiteral(resourceName: "user"))
         }
     }
-    private var ref: DatabaseReference!
+    
     @IBOutlet weak var messageLabel: UILabel!
     private var email: String?
     private var password: String?
@@ -64,7 +65,6 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        ref = Database.database().reference()
         setupUI()
         signUpButtonOriginalConstraint = signUpButtonTopConstraint.constant
         firstNameTextField.delegate = self
@@ -82,6 +82,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     func setupUI(){
         titleLabel.textColor = .white
         titleLabel.font = UIFont.preferredFont(forTextStyle: .largeTitle)
+        backToLogin.setDarkGradient()
         messageLabel.textColor = .error
         self.view.setGradientBackground()
         loginButton.fancyButton()
@@ -122,7 +123,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
             if error != nil {
                 self.updateMessage(message: (error?.localizedDescription)!)
             } else {
-                print("Logged in succesfully")
+               self.performSegue(withIdentifier: "goToMain", sender: nil)
             }
         }
     }
@@ -185,13 +186,12 @@ class LoginVC: UIViewController, UITextFieldDelegate {
             guard let phone = phone else {
                 updateMessage(message: "please provide a last phone.")
                 return }
-            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-                if error != nil {
-                    self.updateMessage(message: (error?.localizedDescription)!)
-                } else {
-                    if Auth.auth().currentUser != nil {
-                        self.ref.child("users").child((Auth.auth().currentUser?.uid)!).setValue(["firstname": firstname, "lastname": lastname, "phone": phone])
-                    }
+            api.createUser(email: email, password: password, firstname: firstname, lastname: lastname, phone: phone) { status, _description in
+                switch status {
+                case .SUCCESS:
+                    self.performSegue(withIdentifier: "goToMain", sender: nil)
+                case .FAILURE:
+                    self.updateMessage(message: _description)
                 }
             }
         }
