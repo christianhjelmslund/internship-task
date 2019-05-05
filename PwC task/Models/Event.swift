@@ -8,18 +8,10 @@
 
 import UIKit
 
-class Event: NSObject {
+struct Event {
     var id: String
     var name: String
     var _description: String
     var date: Date
     var attendees: [Attendee]?
-    
-    init(id: String, name: String, description: String, date: Date, attendees: [Attendee]?) {
-        self.id = id
-        self.name = name
-        self._description = description
-        self.date = date
-        self.attendees = attendees
-    }
 }

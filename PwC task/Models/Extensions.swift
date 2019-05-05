@@ -58,7 +58,6 @@ extension UIView {
         layer.add(animation, forKey: "shake")
     }
 
-    
     func setDarkGradient() {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = bounds
@@ -68,7 +67,6 @@ extension UIView {
         layer.insertSublayer(gradientLayer, at: 0)
     }
 
-    
     func setCornerRadiusAndShadow() {
         self.layer.cornerRadius = 15
         self.layer.shadowColor = UIColor.black.cgColor

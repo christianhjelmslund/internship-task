@@ -59,10 +59,6 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    
-    
-
-    
     @IBAction func signUpAction(_ sender: Any) {
         if let id = event?.id {
             api.signupToEvent(event: id) { status in

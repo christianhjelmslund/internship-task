@@ -17,27 +17,6 @@ class PwCEventAPI {
         ref = Database.database().reference()
     }
     
-    func createEvent(event: Event, isAttending: Bool, completion: @escaping (_ status: Status) -> Void){
-        if let user = Auth.auth().currentUser?.uid {
-            if isAttending {
-                ref.child("events").childByAutoId().setValue(
-                    ["attendees": [user: true],
-                     "date": convertToStringFromDate(date: event.date),
-                     "name": event.name,
-                     "description": event._description])
-                completion(Status.SUCCESS)
-            } else {
-                ref.child("events").childByAutoId().setValue(
-                    ["date": convertToStringFromDate(date: event.date),
-                     "name": event.name,
-                     "description": event._description])
-                completion(Status.SUCCESS)
-            }
-        } else {
-            completion(Status.FAILURE)
-        }
-    }
-    
     func signupToEvent(event: String, completion: @escaping (_ status: Status) -> Void){
         if let user = Auth.auth().currentUser?.uid {
             ref.child("events").child(event).child("attendees").child(user).setValue(true)
@@ -89,7 +68,7 @@ class PwCEventAPI {
                     })
                 }
                 myGroup.notify(queue: .main) {
-                    let returnEvent = Event(id: id, name: name, description: description, date: dateObject, attendees: nil )
+                    var returnEvent = Event(id: id, name: name, _description: description, date: dateObject, attendees: nil )
                     if !returnAttendees.isEmpty {
                         returnEvent.attendees = returnAttendees
                     }
@@ -101,6 +80,21 @@ class PwCEventAPI {
             }
         })
         completion([], Status.FAILURE)
+    }
+    
+    func createEvent(event: Event, isAttending: Bool, completion: @escaping (_ status: Status) -> Void){
+        if let user = Auth.auth().currentUser?.uid {
+            var json = ["date": convertToStringFromDate(date: event.date),
+                        "name": event.name,
+                        "description": event._description] as [String: Any]
+            if isAttending {
+                json["attendees"] = [user: true]
+            }
+            ref.child("events").childByAutoId().setValue(json)
+            completion(Status.SUCCESS)
+        } else {
+            completion(Status.FAILURE)
+        }
     }
     
     func convertToStringFromDate(date: Date) -> String {

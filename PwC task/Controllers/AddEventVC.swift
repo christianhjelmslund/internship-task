@@ -22,8 +22,6 @@ class AddEventVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
     @IBOutlet weak var errorlabel: UILabel!
     private let api = PwCEventAPI()
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -33,14 +31,14 @@ class AddEventVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
         nameTextField.delegate = self
     }
     
-    func createDatePicker(){
+    private func createDatePicker(){
         datePicker = UIDatePicker()
         datePicker?.datePickerMode = .dateAndTime
         dateTextField.inputView = datePicker
         datePicker?.addTarget(self, action: #selector(self.dateChanged(datePicker:)), for: .valueChanged)
     }
     
-    func setupUI(){
+    private func setupUI(){
         self.view.setGradientBackground()
         errorlabel.textColor = .error
         textView.text = "Tap to write a description"
@@ -62,7 +60,7 @@ class AddEventVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
         }
     }
     
-    func updateMessage(message: String){
+    private func updateMessage(message: String){
         errorlabel.text = message
         errorlabel.shake()
     }
@@ -77,7 +75,7 @@ class AddEventVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
         guard let _description = _description else {
             updateMessage(message: "Please give a short description of the event")
             return }
-        let event = Event(id: "", name: name, description: _description, date: date, attendees: [])
+        let event = Event(id: "", name: name, _description: _description, date: date, attendees: [])
        
         api.createEvent(event: event, isAttending: attendingSwitch.isOn) { status in
             switch status {
@@ -112,8 +110,6 @@ class AddEventVC: UIViewController, UITextViewDelegate, UITextFieldDelegate {
         dateTextField.text = dateFormatter.string(from: datePicker.date)
         date = datePicker.date
     }
-    
-
 }
 
 

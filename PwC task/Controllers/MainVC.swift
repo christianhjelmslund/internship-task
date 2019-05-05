@@ -12,6 +12,20 @@ import SwiftyJSON
 
 class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    private var events: [Event] = []
+    private var api = PwCEventAPI()
+    private var selectedIdx = 0
+    private var spinner = UIActivityIndicatorView(style: .whiteLarge)
+    @IBOutlet weak var eventTableView: UITableView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupUI()
+        fetchEvents()
+        self.eventTableView.delegate = self
+        self.eventTableView.dataSource = self
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return events.count
     }
@@ -37,7 +51,7 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 if let attendeesCount = events[safe: indexPath.row]?.attendees?.count {
                     cell.attendees.text = "number of attendees \(attendeesCount)"
                 } else {
-                   cell.attendees.text = "no attendees"
+                    cell.attendees.text = "no attendees"
                 }
                 return cell
             }
@@ -56,21 +70,6 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedIdx = indexPath.row
         performSegue(withIdentifier: "seeEvent", sender: nil)
-    }
-    
-
-    private var events: [Event] = []
-    private var api = PwCEventAPI()
-    private var selectedIdx = 0
-    private var spinner = UIActivityIndicatorView(style: .whiteLarge)
-    @IBOutlet weak var eventTableView: UITableView!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupUI()
-        fetchEvents()
-        self.eventTableView.delegate = self
-        self.eventTableView.dataSource = self
     }
     
     func fetchEvents(){

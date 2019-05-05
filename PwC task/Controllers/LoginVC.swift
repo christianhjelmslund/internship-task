@@ -142,8 +142,6 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    
-    
     func signUpForm(shouldShow: Bool) {
         if shouldShow {
             updateMessage(message: "")
