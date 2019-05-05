@@ -1,5 +1,4 @@
-# pwc
-## A mini project to show for a potential internship at PwC.
+# A mini project for a potential internship
 
 **The task:**
 A department needs to create an event and they need to register for possible registrations online. You need to be able to attend the event and see an overview of the other attendees for an event
@@ -33,6 +32,4 @@ I'm not going to comment much on the code since you can see it yourself :-)
 However, the project is following the classic MVC architecture.
 
 A small demonstration of how the app works:
-
-
-(Disclaimer: This has real no association with PwC and the logo of PwC in the loading screen is just for the demo's purpose, hope it's alright?)
+https://youtu.be/2nyJDrocwuw (it shows the user registration, event page, event info, sign up to event and the creation of new event alongside the Firebase console)
