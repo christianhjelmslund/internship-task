@@ -33,3 +33,5 @@ However, the project is following the classic MVC architecture.
 
 A small demonstration of how the app works:
 https://youtu.be/2nyJDrocwuw (it shows the user registration, event page, event info, sign up to event and the creation of new event alongside the Firebase console)
+
+**Notes**: No input sanitation besides checking if nil and the input sanitation that Firebase provides. Means a phone number can be a string for example. This is not a finished project at all, it's just a small demo made over a weekend
