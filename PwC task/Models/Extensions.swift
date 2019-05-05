@@ -34,7 +34,6 @@ extension CGColor {
 extension UIButton {
     func fancyButton() {
         self.setDarkGradient()
-//        self.layer.cornerRadius = 20
         self.layer.borderWidth = 2
         self.layer.borderColor = UIColor.white.cgColor
         self.setTitleColor(.white, for: .normal)
@@ -50,6 +49,15 @@ extension UIView {
         gradientLayer.endPoint = CGPoint(x: 1, y: 1)
         layer.insertSublayer(gradientLayer, at: 0)
     }
+    
+    func shake() {
+        let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
+        animation.duration = 0.6
+        animation.values = [-10.0, 10.0, -10.0, 10.0, -5.0, 5.0, -2.5, 2.5, 0.0 ]
+        layer.add(animation, forKey: "shake")
+    }
+
     
     func setDarkGradient() {
         let gradientLayer = CAGradientLayer()

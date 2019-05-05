@@ -29,10 +29,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.makeKeyAndVisible()
         }
         UINavigationBar.appearance().barTintColor = .dark
-        UINavigationBar.appearance().tintColor = .PwC_Orange
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.PwC_Orange, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24)]
-        
-        
+        UINavigationBar.appearance().tintColor = .white
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont.systemFont(ofSize: 24)]
+       
         return true
     }
 

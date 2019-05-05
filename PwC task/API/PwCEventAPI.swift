@@ -17,6 +17,27 @@ class PwCEventAPI {
         ref = Database.database().reference()
     }
     
+    func createEvent(event: Event, isAttending: Bool, completion: @escaping (_ status: Status) -> Void){
+        if let user = Auth.auth().currentUser?.uid {
+            if isAttending {
+                ref.child("events").childByAutoId().setValue(
+                    ["attendees": [user: true],
+                     "date": convertToStringFromDate(date: event.date),
+                     "name": event.name,
+                     "description": event._description])
+                completion(Status.SUCCESS)
+            } else {
+                ref.child("events").childByAutoId().setValue(
+                    ["date": convertToStringFromDate(date: event.date),
+                     "name": event.name,
+                     "description": event._description])
+                completion(Status.SUCCESS)
+            }
+        } else {
+            completion(Status.FAILURE)
+        }
+    }
+    
     func signupToEvent(event: String, completion: @escaping (_ status: Status) -> Void){
         if let user = Auth.auth().currentUser?.uid {
             ref.child("events").child(event).child("attendees").child(user).setValue(true)
@@ -32,7 +53,7 @@ class PwCEventAPI {
                 completion(Status.FAILURE, (error?.localizedDescription)!)
             } else {
                 if authResult?.user.uid != nil {
-                    self.ref.child("users").child((authResult?.user.uid)!).setValue(["firstname": firstname, "lastname": lastname, "phone": phone])
+                    self.ref.child("users").child((authResult?.user.uid)!).setValue(["firstname": firstname, "lastname": lastname, "phone": phone, "email": email])
                     completion(Status.SUCCESS, "")
                 }
             }
@@ -61,7 +82,7 @@ class PwCEventAPI {
                         guard let firstname = user["firstname"].string else { return }
                         guard let lastname = user["lastname"].string else { return }
                         guard let phone = user["phone"].string else { return }
-                        guard let email = Auth.auth().currentUser?.email else { return }
+                        guard let email = user["email"].string else { return }
                         let returnAttendee = Attendee(firstname: firstname, lastname: lastname, email: email, phoneNumber: phone)
                         returnAttendees.append(returnAttendee)
                         myGroup.leave()
@@ -82,6 +103,14 @@ class PwCEventAPI {
         completion([], Status.FAILURE)
     }
     
+    func convertToStringFromDate(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "CET")
+        dateFormatter.dateFormat = "dd.MM.yy HH:mm"
+        let dateString = dateFormatter.string(from: date)
+        return dateString
+    }
+        
     func convertToDateObject(date: String) -> Date? {
         let formatter = DateFormatter()
         formatter.timeZone = TimeZone(abbreviation: "CET")

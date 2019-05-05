@@ -67,12 +67,13 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.view.setGradientBackground()
+        setupUI()
+        fetchEvents()
         self.eventTableView.delegate = self
         self.eventTableView.dataSource = self
-        eventTableView.separatorStyle = .none
-        
+    }
+    
+    func fetchEvents(){
         api.fetchEvents() { events, status in
             switch status {
             case .SUCCESS:
@@ -86,10 +87,13 @@ class MainVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 self.startSpinner()
                 return
             }
-            for event in self.events {
-                print(event.name)
-            }
         }
+    }
+    
+    func setupUI(){
+        eventTableView.separatorStyle = .none
+        navigationController?.navigationBar.barStyle = .black
+        self.view.setGradientBackground()
     }
     
     func convertToDateObject(date: Date) -> String? {

@@ -20,10 +20,10 @@ class EventCell: UITableViewCell {
         self.selectionStyle = .none
         bgView.setCornerRadiusAndShadow()
         bgView.backgroundColor = .dark
-        name.textColor = .PwC_Orange
-        date.textColor = .PwC_DarkOrange
-        _description.textColor = .PwC_DarkOrange
-        attendees.textColor = .PwC_DarkYellow
+        name.textColor = .white
+        date.textColor = .white
+        _description.textColor = .white
+        attendees.textColor = .white
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

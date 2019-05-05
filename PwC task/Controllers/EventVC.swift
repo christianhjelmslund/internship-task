@@ -20,12 +20,7 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.setGradientBackground()
-        attendees = event?.attendees
-        errorLabel.textColor = .error
-        signUpButton.setTitleColor(.PwC_DarkOrange, for: .normal)
-        signUpButton.setDarkGradient()
-        name.text = event?.name
+        setupUI()
         self.attendeeTableView.delegate = self
         self.attendeeTableView.dataSource = self
     }
@@ -38,6 +33,17 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    func setupUI(){
+        navigationController?.navigationBar.barStyle = .black
+        self.view.setGradientBackground()
+        attendees = event?.attendees
+        errorLabel.textColor = .error
+        attendeeTableView.separatorStyle = .none
+        signUpButton.setTitleColor(.white, for: .normal)
+        signUpButton.backgroundColor = .clear
+        name.text = event?.name
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "specificEvent", for: indexPath) as! SpecificEventCell
         if let firstname = attendees?[safe: indexPath.row]?.firstname,
@@ -45,13 +51,15 @@ class EventVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             let email = attendees?[safe: indexPath.row]?.email,
             let phone = attendees?[safe: indexPath.row]?.phoneNumber
         {
-            cell.name.text = "name: \(firstname)  \(lastname)"
+            cell.name.text = "name: \(firstname) \(lastname)"
             cell.email.text = "email: \(email)"
             cell.phone.text = "phone: \(phone)"
             return cell
         }
         return cell
     }
+    
+    
     
 
     

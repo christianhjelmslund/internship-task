@@ -81,6 +81,8 @@
 		A122D3BC227CD7B700E83791 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A1EC5F00227DB031007195BD /* EventCell.swift */,
+				A1EC5F06227DDCFF007195BD /* SpecificEventCell.swift */,
 				A1742FFE227C82E700E26F82 /* LaunchScreen.storyboard */,
 				A1742FF9227C82E600E26F82 /* Main.storyboard */,
 				A1742FFC227C82E700E26F82 /* Assets.xcassets */,
@@ -128,8 +130,6 @@
 				A122D3B7227CD09900E83791 /* Fonts */,
 				A1743001227C82E700E26F82 /* Info.plist */,
 				A122D3C2227CDCC500E83791 /* GoogleService-Info.plist */,
-				A1EC5F00227DB031007195BD /* EventCell.swift */,
-				A1EC5F06227DDCFF007195BD /* SpecificEventCell.swift */,
 			);
 			path = "PwC task";
 			sourceTree = "<group>";

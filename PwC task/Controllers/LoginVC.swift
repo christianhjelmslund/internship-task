@@ -54,7 +54,6 @@ class LoginVC: UIViewController, UITextFieldDelegate {
             emailTextField.setIcon(#imageLiteral(resourceName: "user"))
         }
     }
-    
     @IBOutlet weak var messageLabel: UILabel!
     private var email: String?
     private var password: String?
@@ -80,6 +79,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     }
     
     func setupUI(){
+        navigationController?.navigationBar.barStyle = .black
         titleLabel.textColor = .white
         titleLabel.font = UIFont.preferredFont(forTextStyle: .largeTitle)
         backToLogin.setDarkGradient()
@@ -87,6 +87,10 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         self.view.setGradientBackground()
         loginButton.fancyButton()
         signUpForm(shouldShow: false)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
    
     @IBAction func firstNameAction(_ sender: UITextField) {
@@ -110,6 +114,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
     
     func updateMessage(message: String){
         messageLabel.text = message
+        messageLabel.shake()
     }
     
     @IBAction func login(_ sender: Any) {
@@ -136,6 +141,8 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+    
+    
     
     func signUpForm(shouldShow: Bool) {
         if shouldShow {
